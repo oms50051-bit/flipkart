@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Travel Flight UI Clone</title>
+    <link rel="stylesheet" href="travel.css">
+</head>
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #fff;
+        color: #171717
+    }
+
+    .topbar {
+        height: 64px;
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        padding: 0 72px;
+        font-size: 15px;
+        white-space: nowrap
+    }
+
+    .topbar>div {
+        padding: 13px 24px;
+        border-radius: 12px
+    }
+
+
+    .spacer {
+        flex: 1 !important;
+        padding: 0 !important
+    }
+
+    main {
+        width: 92%;
+        max-width: 1460px;
+        margin: auto;
+        position: relative
+    }
+
+    .banner {
+        width: 100%;
+        height: 141px;
+        object-fit: cover;
+        border-radius: 20px 20px 0 0;
+        display: block
+    }
+
+    .switcher {
+        position: absolute;
+        z-index: 3;
+        top: 110px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 80px;
+        width: 490px;
+        border: 1px solid #ddd;
+        border-radius: 42px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 8px
+    }
+
+    .switcher button {
+        border: 0;
+        background: none;
+        font-size: 18px;
+        color: #777;
+        padding: 13px 24px;
+        border-radius: 32px;
+        cursor: pointer
+    }
+
+    .switcher .selected {
+        background: #eaf1ff;
+        color: #111;
+        font-weight: 700
+    }
+
+    .switcher span {
+        display: inline-flex;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        background: #55c935;
+        color: #fff;
+        margin-right: 8px
+    }
+
+    .switcher button:nth-child(2) span {
+        background: #2870e7
+    }
+
+    .switcher button:nth-child(3) span {
+        background: #ffd52e
+    }
+
+    .searchCard {
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        min-height: 360px;
+        padding: 62px 20px 38px;
+        box-shadow: 0 8px 20px #00000012;
+        position: relative
+    }
+
+    .tripType {
+        display: flex;
+        gap: 28px;
+        margin-bottom: 32px;
+        font-size: 20px
+    }
+
+    .tripType input,
+    .classOpt input {
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border: 2px solid #888;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin: 0 9px 0 0;
+        position: relative
+    }
+
+    .tripType input:checked,
+    .classOpt input:checked {
+        border-color: #2f5ee5
+    }
+
+    .tripType input:checked:after,
+    .classOpt input:checked:after {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border-radius: 50%;
+        background: #2f5ee5
+    }
+
+    .fields {
+        display: grid;
+        grid-template-columns: 2.7fr 1fr 1fr 1.8fr;
+        border: 1px solid #e2e2e2;
+        border-radius: 20px;
+        overflow: visible
+    }
+
+    .field {
+        height: 113px;
+        background: #fff;
+        border: 0;
+        border-right: 1px solid #e5e5e5;
+        text-align: left;
+        padding: 17px 20px;
+        position: relative;
+        cursor: pointer
+    }
+
+    .field:last-child {
+        border: 0
+    }
+
+    .field small,
+    .field em {
+        display: block;
+        color: #777;
+        font-size: 15px;
+        font-style: normal
+    }
+
+    .field strong {
+        display: block;
+        font-size: 24px;
+        margin: 8px 0 4px
+    }
+
+    .field em {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
+
+    .route {
+        padding-right: 230px
+    }
+
+    .route .to {
+        position: absolute;
+        right: 20px;
+        top: 17px;
+        text-align: right;
+        width: 190px
+    }
+
+    .route .to strong {
+        font-size: 24px
+    }
+
+    .swap {
+        position: absolute;
+        right: 50%;
+        top: 40px;
+        border: 2px solid #526ce5;
+        color: #526ce5;
+        border-radius: 50%;
+        width: 31px;
+        height: 31px;
+        text-align: center;
+        line-height: 26px;
+        font-size: 21px;
+        background: #fff
+    }
+
+    .returnField strong {
+        color: #aaa;
+        font-size: 19px
+    }
+
+    .searchBtn {
+        position: absolute;
+        right: 20px;
+        bottom: 38px;
+        width: 312px;
+        height: 56px;
+        border: 0;
+        border-radius: 16px;
+        background: #ffe400;
+        font-size: 20px;
+        font-weight: 700;
+        cursor: pointer
+    }
+
+    .pop {
+        display: none;
+        position: fixed;
+        z-index: 20;
+        background: #fff;
+        box-shadow: 0 10px 35px #0002;
+        border: 1px solid #ddd
+    }
+
+    .calendar {
+        width: 1020px;
+        left: 50%;
+        top: 372px;
+        transform: translateX(-50%);
+        border-radius: 20px;
+        padding: 20px
+    }
+
+    .calHeader {
+        display: grid;
+        grid-template-columns: 40px 1fr 1fr 40px;
+        align-items: center
+    }
+
+    .calHeader h2 {
+        text-align: center;
+        font-size: 24px
+    }
+
+    .calHeader button {
+        border: 0;
+        background: none;
+        font-size: 35px;
+        cursor: pointer
+    }
+
+    .months {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px
+    }
+
+    .month table {
+        width: 100%;
+        border-collapse: collapse
+    }
+
+    .month th {
+        height: 42px;
+        font-weight: 400
+    }
+
+    .month th:nth-last-child(-n+2) {
+        color: #c44
+    }
+
+    .month td {
+        text-align: center;
+        height: 62px;
+        cursor: pointer
+    }
+
+    .month td .price {
+        display: block;
+        font-size: 12px;
+        color: #888;
+        margin-top: 7px
+    }
+
+    .month td:hover {
+        background: #eef3ff;
+        border-radius: 10px
+    }
+
+    .travellerPop {
+        width: 650px;
+        right: 4%;
+        top: 372px;
+        border-radius: 20px;
+        padding: 24px;
+        display: none;
+        grid-template-columns: 1.1fr .9fr;
+        gap: 30px
+    }
+
+    .travellerPop h2 {
+        font-size: 25px;
+        margin: 0 0 20px
+    }
+
+    .person {
+        display: grid;
+        grid-template-columns: 1fr 42px 30px 42px;
+        align-items: center;
+        margin: 17px 0;
+        font-size: 18px
+    }
+
+    .person small {
+        display: block;
+        color: #888;
+        font-size: 14px;
+        margin-top: 3px
+    }
+
+    .person button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #8194e8;
+        background: #fff;
+        font-size: 23px;
+        color: #526ce5
+    }
+
+    .person b {
+        text-align: center
+    }
+
+    .classOpt {
+        display: block;
+        font-size: 18px;
+        margin: 22px 0
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        background: transparent
+    }
+
+    @media(max-width:900px) {
+        .topbar {
+            padding: 0 15px;
+            gap: 4px;
+            overflow: hidden
+        }
+
+        .topbar>div {
+            padding: 10px
+        }
+
+        .banner {
+            height: 110px
+        }
+
+        .switcher {
+            width: 92%;
+            top: 80px
+        }
+
+        .searchCard {
+            padding-top: 55px
+        }
+
+        .fields {
+            grid-template-columns: 1fr
+        }
+
+        .field {
+            border-right: 0;
+            border-bottom: 1px solid #eee
+        }
+
+        .route {
+            height: 150px
+        }
+
+        .searchBtn {
+            position: static;
+            width: 100%;
+            margin-top: 20px
+        }
+
+        .calendar {
+            width: 95%;
+            top: 150px
+        }
+
+        .months {
+            grid-template-columns: 1fr
+        }
+
+        .travellerPop {
+            right: 2.5%;
+            top: 150px;
+            width: 95%;
+            grid-template-columns: 1fr
+        }
+    }
+</style>
+
+<body>
+    <header class="topbar">
+        <div class="brand flex gap-1 justify-center items-center h-10 bg-olive-100">
+            <a href="index.html"><img src="images/d2ecfddf891a3922.png" style="height: 20px;" alt=""></a>
+            <a href="index.html"><img src="images/31f7e3af490c225f.webp" style="height: 18px;" alt=""></a>
+        </div>
+        <div class="flex gap-1 justify-center items-center h-10 bg-olive-100">
+            <a href="min.html"><img src="images/716adbc920ad1eba.webp" style="height: 20px;" alt=""></a>
+            <a href="min.html"><img src="images/256fdf0144fd6d52.webp" style="height: 20px;" alt=""></a>
+        </div>
+        <div class="activeTop flex gap-1 justify-center items-center h-10 bg-olive-100">
+            <img src="images/7ab4040af860941d.webp" style="height: 20px;" alt="">
+            <img src="images/5a9ff48eef96b876.png" style="height: 20px;" alt="">
+        </div>
+        <div class="flex gap-1 justify-center items-center h-10 bg-olive-100">
+            <a href="grocery.html"><img src="images/2545bc4517298b90.webp" style="height: 20px;" alt=""></a>
+            <a href="grocery.html"><img src="images/29d70af2af1d6f47.webp" style="height: 20px;" alt=""></a>
+        </div>
+        <div class="spacer"></div>
+        <div>🎫 My trips</div>
+        <div>⚡ 0</div>
+    </header>
+    <main><img class="banner" src="images/banner.png" alt="Flash Sale">
+        <nav class="switcher"><button class="selected"><span>✈</span> Flights</button><button><span>🏢</span>
+                Hotels</button><button><span>🚌</span> Buses</button></nav>
+        <section class="searchCard">
+            <div class="tripType"><label><input type="radio" name="trip" value="one" checked> <b>One
+                        Way</b></label><label><input type="radio" name="trip" value="round"> <b>Round Trip</b></label>
+            </div>
+            <div class="fields">
+                <button class="field route" id="routeBtn"><small>From -
+                        BOM</small><strong>Mumbai</strong><em>Chhatrapati Shivaji International...</em><span
+                        class="swap">⇄</span>
+                    <div class="to"><small>To - HYD</small><strong>Hyderabad</strong><em>Rajiv Gandhi International
+                            Airport</em></div>
+                </button>
+                <button class="field" id="departBtn"><small>Departure</small><strong id="departText">2 Aug</strong><em
+                        id="departDay">Sunday</em></button>
+                <button class="field returnField" id="returnBtn"><small>Return</small><strong id="returnText">Add for
+                        discounts</strong><em></em></button>
+                <button class="field travellers" id="travellerBtn"><small>Travellers & Class</small><strong
+                        id="travellerText">1 Adult</strong><em id="classText">Economy</em></button>
+            </div><button class="searchBtn" id="searchBtn">Search flights</button>
+        </section>
+    </main>
+    <div class="overlay" id="overlay"></div>
+    <div class="calendar pop" id="calendar">
+        <div class="calHeader"><button id="prev">‹</button>
+            <h2 id="m1"></h2>
+            <h2 id="m2"></h2><button id="next">›</button>
+        </div>
+        <div class="months" id="months"></div>
+    </div>
+    <div class="travellerPop pop" id="travellerPop">
+        <div>
+            <h2>Select travellers</h2>
+            <div class="person">
+                <div>Adults<small>12+ years</small></div><button data-type="adult" data-dir="-1">−</button><b
+                    id="adultCount">1</b><button data-type="adult" data-dir="1">＋</button>
+            </div>
+            <div class="person">
+                <div>Children<small>2-12 years</small></div><button data-type="child" data-dir="-1">−</button><b
+                    id="childCount">0</b><button data-type="child" data-dir="1">＋</button>
+            </div>
+            <div class="person">
+                <div>Infants<small>Under 2 years</small></div><button data-type="infant" data-dir="-1">−</button><b
+                    id="infantCount">0</b><button data-type="infant" data-dir="1">＋</button>
+            </div>
+        </div>
+        <div>
+            <h2>Select class</h2><label class="classOpt"><input type="radio" name="class" value="Economy" checked>
+                Economy</label><label class="classOpt"><input type="radio" name="class" value="Premium Economy"> Premium
+                Economy</label><label class="classOpt"><input type="radio" name="class" value="Business">
+                Business</label>
+        </div>
+    </div>
+
+
+    <script>
+        const $ = s => document.querySelector(s); const $$ = s => document.querySelectorAll(s);
+        const cal = $('#calendar'), trav = $('#travellerPop'), overlay = $('#overlay'); let view = new Date(2026, 7, 1); let selected = new Date(2026, 7, 2); let adults = 1, children = 0, infants = 0;
+        function closePop() { cal.style.display = 'none'; trav.style.display = 'none'; overlay.style.display = 'none' }
+        function openCal() { trav.style.display = 'none'; cal.style.display = 'block'; overlay.style.display = 'block'; renderCalendar() }
+        function monthName(d) { return d.toLocaleString('en-US', { month: 'long', year: 'numeric' }) }
+        function renderCalendar() { let d1 = new Date(view.getFullYear(), view.getMonth(), 1), d2 = new Date(view.getFullYear(), view.getMonth() + 1, 1); $('#m1').textContent = monthName(d1); $('#m2').textContent = monthName(d2); let html = '';[d1, d2].forEach((d, mi) => { let y = d.getFullYear(), m = d.getMonth(), first = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate(); html += `<div class="month"><table><thead><tr>${['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>`; let n = 1; for (let r = 0; r < 6; r++) { html += '<tr>'; for (let c = 0; c < 7; c++) { let idx = r * 7 + c; if ((r === 0 && c < first) || n > days) html += '<td></td>'; else { let price = ['₹6,065', '₹5,282', '₹4,607', '₹5,282', '₹4,675', '₹4,675', '₹4,187'][(n + c) % 7]; html += `<td data-date="${y}-${String(m + 1).padStart(2, '0')}-${String(n).padStart(2, '0')}"><b>${n}</b><span class="price">${price}</span></td>`; n++ } } html += '</tr>'; if (n > days) break } html += '</tbody></table></div>' }); $('#months').innerHTML = html; $$('#months td[data-date]').forEach(td => td.onclick = () => { selected = new Date(td.dataset.date); $('#departText').textContent = selected.toLocaleDateString('en-US', { day: 'numeric', month: 'short' }); $('#departDay').textContent = selected.toLocaleDateString('en-US', { weekday: 'long' }); closePop() }) }
+        $('#departBtn').onclick = openCal; $('#returnBtn').onclick = openCal; $('#prev').onclick = () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCalendar() }; $('#next').onclick = () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCalendar() };
+        $('#travellerBtn').onclick = () => { cal.style.display = 'none'; trav.style.display = 'grid'; overlay.style.display = 'block' }; overlay.onclick = closePop;
+        $$('.person button').forEach(b => b.onclick = e => { let type = b.dataset.type, dir = +b.dataset.dir; if (type === 'adult') adults = Math.max(1, Math.min(9, adults + dir)); if (type === 'child') children = Math.max(0, Math.min(6, children + dir)); if (type === 'infant') infants = Math.max(0, Math.min(6, infants + dir)); $('#adultCount').textContent = adults; $('#childCount').textContent = children; $('#infantCount').textContent = infants; $('#travellerText').textContent = `${adults + children + infants} Traveller${adults + children + infants !== 1 ? 's' : ''}` });
+        $$('input[name="class"]').forEach(r => r.onchange = () => $('#classText').textContent = r.value); $('#searchBtn').onclick = () => alert(`Searching flights: Mumbai → Hyderabad on ${$('#departText').textContent}`); $$('input[name="trip"]').forEach(r => r.onchange = () => $('#returnText').textContent = r.value === 'round' ? 'Select return date' : 'Add for discounts');
+
+    </script>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</body>
+
+</html>

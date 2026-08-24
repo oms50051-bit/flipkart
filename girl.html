@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flipkart Filter UI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f1f3f6;
+            color: #212121;
+        }
+
+        /* ================= LAYOUT ================= */
+
+        .page {
+            display: flex;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        /* ================= FILTER ================= */
+
+        .filter-sidebar {
+            width: 280px;
+            background: #fff;
+            min-height: 100vh;
+            flex-shrink: 0;
+        }
+
+        .filter-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .filter-top h2 {
+            font-size: 20px;
+        }
+
+        .clear {
+            border: 0;
+            background: none;
+            color: #2874f0;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* FILTER BOX */
+
+        .filter-box {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .filter-box h3 {
+            font-size: 13px;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        /* SEARCH */
+
+        .brand-search {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #ddd;
+            padding: 0 10px;
+            outline: none;
+            margin-bottom: 12px;
+        }
+
+        .brand-search:focus {
+            border-color: #2874f0;
+        }
+
+        /* OPTIONS */
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 14px 0;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .option input {
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            accent-color: #2874f0;
+        }
+
+        .option:hover {
+            color: #2874f0;
+        }
+
+        /* MORE */
+
+        .more {
+            color: #2874f0;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 18px;
+        }
+
+        /* PRICE RANGE */
+
+        .price-range {
+            width: 100%;
+        }
+
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #555;
+            font-size: 13px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #2874f0;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .products-area {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        /* HEADER */
+
+        .result-header {
+            background: #fff;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .result-header h1 {
+            font-size: 20px;
+        }
+
+        .result-header p {
+            color: #777;
+            margin-top: 8px;
+        }
+
+        /* SORT */
+
+        .sort {
+            background: #fff;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 0 20px;
+            height: 55px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .sort strong {
+            font-size: 14px;
+        }
+
+        .sort button {
+            background: none;
+            border: 0;
+            height: 100%;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .sort button.active {
+            color: #2874f0;
+            border-bottom: 3px solid #2874f0;
+        }
+
+        /* PRODUCTS */
+
+        .products {
+            background: #fff;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .product {
+            padding: 25px 18px;
+            border-right: 1px solid #eee;
+            position: relative;
+            min-height: 500px;
+        }
+
+        .product:hover {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .12);
+            z-index: 2;
+        }
+
+        /* IMAGE */
+
+        .product-image {
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* HEART */
+
+        .heart {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 24px;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .heart.active {
+            color: #e53935;
+        }
+
+        /* PRODUCT INFO */
+
+        .product-name {
+            color: #212121;
+            font-size: 15px;
+            line-height: 22px;
+            margin-top: 20px;
+        }
+
+        .details {
+            color: #777;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .rating {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .rating-box {
+            background: #388e3c;
+            color: #fff;
+            padding: 4px 7px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .reviews {
+            color: #777;
+        }
+
+        .price {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 12px;
+        }
+
+        .price strong {
+            font-size: 19px;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .discount {
+            color: #388e3c;
+            font-weight: bold;
+        }
+
+        .offer {
+            color: #388e3c;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        /* NO PRODUCT */
+
+        .no-product {
+            display: none;
+            background: #fff;
+            padding: 100px;
+            text-align: center;
+            color: #777;
+            font-size: 20px;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:1000px) {
+
+            .products {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+        @media(max-width:750px) {
+
+            .filter-sidebar {
+                width: 220px;
+            }
+
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media(max-width:550px) {
+
+            .filter-sidebar {
+                display: none;
+            }
+
+            .products {
+                grid-template-columns: 1fr;
+            }
+
+            .sort {
+                overflow-x: auto;
+                gap: 20px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="page">
+
+        <!-- ================================================= -->
+        <!-- FILTER SIDEBAR -->
+        <!-- ================================================= -->
+
+        <aside class="filter-sidebar">
+
+            <div class="filter-top">
+
+                <h2>Filters</h2>
+
+                <button class="clear" id="clearFilters">
+                    CLEAR ALL
+                </button>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="filter-box">
+
+                <h3>Categories</h3>
+
+                <label class="option">
+                    <input type="checkbox" class="category" value="mobile">
+                    kutra
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" class="category" value="laptop">
+                    sarees
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" class="category" value="tablet">
+                    tops
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" class="category" value="tablet">
+                    kurtis
+                </label>
+
+            </div>
+
+
+            <!-- BRAND -->
+
+            <div class="filter-box">
+
+                <h3>Brand</h3>
+
+                <input type="text" id="brandSearch" class="brand-search" placeholder="Search Brand">
+
+
+                <label class="option brand-option">
+                    <input type="checkbox" class="brand" value="samsung">
+                    h&m
+                </label>
+
+                <label class="option brand-option">
+                    <input type="checkbox" class="brand" value="apple">
+                    Biba
+                </label>
+
+                <label class="option brand-option">
+                    <input type="checkbox" class="brand" value="oneplus">
+                    Aurelia
+                </label>
+
+                <label class="option brand-option">
+                    <input type="checkbox" class="brand" value="realme">
+                    Uptownie
+                </label>
+
+                <label class="option brand-option">
+                    <input type="checkbox" class="brand" value="xiaomi">
+                    AND
+                </label>
+
+                <label class="option brand-option">
+                    <input type="checkbox" class="brand" value="vivo">
+                    Uniqlo
+                </label>
+
+                <div class="more">
+                    50 MORE
+                </div>
+
+            </div>
+
+
+            <!-- PRICE -->
+
+            <div class="filter-box">
+
+                <h3>Price</h3>
+
+                <input type="range" min="0" max="100000" value="100000" id="priceRange" class="price-range">
+
+                <div class="price-values">
+
+                    <span>₹0</span>
+
+                    <span id="priceValue">
+                        ₹1,00,000+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CUSTOMER RATING -->
+
+            <div class="filter-box">
+
+                <h3>Customer Ratings</h3>
+
+                <label class="option">
+                    <input type="checkbox" class="rating-filter" value="4">
+                    4★ & above
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" class="rating-filter" value="3">
+                    3★ & above
+                </label>
+
+            </div>
+
+
+            <!-- DISCOUNT -->
+
+            <div class="filter-box">
+
+                <h3>Discount</h3>
+
+                <label class="option">
+                    <input type="radio" name="discount" value="20">
+                    20% or more
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="discount" value="30">
+                    30% or more
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="discount" value="50">
+                    50% or more
+                </label>
+
+            </div>
+
+
+            <!-- AVAILABILITY -->
+
+            <div class="filter-box">
+
+                <h3>Availability</h3>
+
+                <label class="option">
+
+                    <input type="checkbox" id="stockFilter">
+
+                    Include Out of Stock
+
+                </label>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================================================= -->
+        <!-- PRODUCTS -->
+        <!-- ================================================= -->
+
+        <main class="products-area">
+
+            <div class="result-header">
+
+                <h1>Mobiles</h1>
+
+                <p id="resultCount">
+                    Showing 6 products
+                </p>
+
+            </div>
+
+
+            <!-- SORT -->
+
+            <div class="sort">
+
+                <strong>Sort By</strong>
+
+                <button class="sort-btn active" data-sort="popular">
+                    Popularity
+                </button>
+
+                <button class="sort-btn" data-sort="low">
+                    Price -- Low to High
+                </button>
+
+                <button class="sort-btn" data-sort="high">
+                    Price -- High to Low
+                </button>
+
+                <button class="sort-btn" data-sort="rating">
+                    Customer Rating
+                </button>
+
+                <button class="sort-btn" data-sort="discount">
+                    Discount
+                </button>
+
+            </div>
+
+
+            <div class="products" id="products">
+
+
+                <!-- PRODUCT 1 -->
+
+                <div class="product" data-brand="samsung" data-category="mobile" data-price="24999" data-rating="4.4"
+                    data-discount="20" data-popular="100" data-stock="yes">
+
+                    <div class="heart">♡</div>
+
+                    <div class="product-image">
+                        <img src="images/l-blue-work-mb-creation-original-imahmstr2vh3zfcx.webp" alt="Samsung Mobile">
+
+
+                    </div>
+
+                    <div class="product-name">
+                        Samsung Galaxy Smartphone
+                        8GB RAM 128GB Storage
+                    </div>
+
+                    <div class="details">
+                        8 GB RAM | 128 GB ROM
+                    </div>
+
+                    <div class="rating">
+
+                        <span class="rating-box">
+                            4.4 ★
+                        </span>
+
+                        <span class="reviews">
+                            12,450 Ratings
+                        </span>
+
+                    </div>
+
+                    <div class="price">
+
+                        <strong>₹24,999</strong>
+
+                        <span class="old-price">
+                            ₹31,999
+                        </span>
+
+                        <span class="discount">
+                            21% off
+                        </span>
+
+                    </div>
+
+                    <div class="offer">
+                        Bank Offer
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 2 -->
+
+                <div class="product" data-brand="apple" data-category="mobile" data-price="69999" data-rating="4.7"
+                    data-discount="12" data-popular="95" data-stock="yes">
+
+                    <div class="heart">♡</div>
+
+                    <div class="product-image">
+
+                        <img src="images/l-de-kurta-set-colorwings-original-imahkz5zg39bcqt6.webp" alt="iPhone">
+
+
+                    </div>
+
+                    <div class="product-name">
+                        Apple iPhone Smartphone
+                        128 GB Storage
+                    </div>
+
+                    <div class="details">
+                        128 GB ROM | 6 GB RAM
+                    </div>
+
+                    <div class="rating">
+
+                        <span class="rating-box">
+                            4.7 ★
+                        </span>
+
+                        <span class="reviews">
+                            8,450 Ratings
+                        </span>
+
+                    </div>
+
+                    <div class="price">
+
+                        <strong>₹69,999</strong>
+
+                        <span class="old-price">
+                            ₹79,999
+                        </span>
+
+                        <span class="discount">
+                            12% off
+                        </span>
+
+                    </div>
+
+                    <div class="offer">
+                        Bank Offer
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 3 -->
+
+                <div class="product" data-brand="oneplus" data-category="mobile" data-price="32999" data-rating="4.5"
+                    data-discount="25" data-popular="90" data-stock="yes">
+
+                    <div class="heart">♡</div>
+
+                    <div class="product-image">
+
+                        <img src="images/l-red-suit-anugraha-resized-original-imahm8j8vjkgrgay.webp" alt="OnePlus">
+
+
+                    </div>
+
+                    <div class="product-name">
+                        OnePlus 13R 5G
+                        256 GB Storage
+                    </div>
+
+                    <div class="details">
+                        12 GB RAM | 256 GB ROM
+                    </div>
+
+                    <div class="rating">
+
+                        <span class="rating-box">
+                            4.5 ★
+                        </span>
+
+                        <span class="reviews">
+                            6,210 Ratings
+                        </span>
+
+                    </div>
+
+                    <div class="price">
+
+                        <strong>₹32,999</strong>
+
+                        <span class="old-price">
+                            ₹43,999
+                        </span>
+
+                        <span class="discount">
+                            25% off
+                        </span>
+
+                    </div>
+
+                    <div class="offer">
+                        Bank Offer
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 4 -->
+
+                <div class="product" data-brand="realme" data-category="mobile" data-price="14999" data-rating="4.1"
+                    data-discount="35" data-popular="85" data-stock="yes">
+
+                    <div class="heart">♡</div>
+
+                    <div class="product-image">
+
+                        <img src="images/l-uma-rekag-original-imahns46mheebamz.webp" alt="Realme">
+
+
+                    </div>
+
+                    <div class="product-name">
+                        Realme 5G Smartphone
+                        128 GB Storage
+                    </div>
+
+                    <div class="details">
+                        8 GB RAM | 128 GB ROM
+                    </div>
+
+                    <div class="rating">
+
+                        <span class="rating-box">
+                            4.1 ★
+                        </span>
+
+                        <span class="reviews">
+                            5,200 Ratings
+                        </span>
+
+                    </div>
+
+                    <div class="price">
+
+                        <strong>₹14,999</strong>
+
+                        <span class="old-price">
+                            ₹22,999
+                        </span>
+
+                        <span class="discount">
+                            35% off
+                        </span>
+
+                    </div>
+
+                    <div class="offer">
+                        Bank Offer
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 5 -->
+
+                <div class="product" data-brand="xiaomi" data-category="mobile" data-price="11999" data-rating="3.9"
+                    data-discount="40" data-popular="80" data-stock="no">
+
+                    <div class="heart">♡</div>
+
+                    <div class="product-image">
+
+                        <img src="images/s-farsi-suit-elepants-original-imahmnabcnuhxznw.webp" alt="Xiaomi">
+
+
+                    </div>
+
+                    <div class="product-name">
+                        Xiaomi Redmi 5G
+                        Smartphone
+                    </div>
+
+                    <div class="details">
+                        6 GB RAM | 128 GB ROM
+                    </div>
+
+                    <div class="rating">
+
+                        <span class="rating-box">
+                            3.9 ★
+                        </span>
+
+                        <span class="reviews">
+                            3,210 Ratings
+                        </span>
+
+                    </div>
+
+                    <div class="price">
+
+                        <strong>₹11,999</strong>
+
+                        <span class="old-price">
+                            ₹19,999
+                        </span>
+
+                        <span class="discount">
+                            40% off
+                        </span>
+
+                    </div>
+
+                    <div class="offer">
+                        Bank Offer
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT 6 -->
+
+                <div class="product" data-brand="vivo" data-category="mobile" data-price="18999" data-rating="4.3"
+                    data-discount="30" data-popular="75" data-stock="yes">
+
+                    <div class="heart">♡</div>
+
+                    <div class="product-image">
+
+                        <img src="images/s-es-2515-avanshee-original-imahmzckg9dwenpq.webp" alt="Vivo">
+
+
+                    </div>
+
+                    <div class="product-name">
+                        Vivo 5G Smartphone
+                        128 GB Storage
+                    </div>
+
+                    <div class="details">
+                        8 GB RAM | 128 GB ROM
+                    </div>
+
+                    <div class="rating">
+
+                        <span class="rating-box">
+                            4.3 ★
+                        </span>
+
+                        <span class="reviews">
+                            4,850 Ratings
+                        </span>
+
+                    </div>
+
+                    <div class="price">
+
+                        <strong>₹18,999</strong>
+
+                        <span class="old-price">
+                            ₹26,999
+                        </span>
+
+                        <span class="discount">
+                            30% off
+                        </span>
+
+                    </div>
+
+                    <div class="offer">
+                        Bank Offer
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="no-product" id="noProduct">
+
+                😔 No products found
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        /* ==========================================
+           VARIABLES
+        ========================================== */
+
+        const products =
+            [...document.querySelectorAll(".product")];
+
+        const brands =
+            [...document.querySelectorAll(".brand")];
+
+        const categories =
+            [...document.querySelectorAll(".category")];
+
+        const ratings =
+            [...document.querySelectorAll(".rating-filter")];
+
+        const brandSearch =
+            document.getElementById("brandSearch");
+
+        const priceRange =
+            document.getElementById("priceRange");
+
+        const stockFilter =
+            document.getElementById("stockFilter");
+
+        const resultCount =
+            document.getElementById("resultCount");
+
+        const noProduct =
+            document.getElementById("noProduct");
+
+
+        /* ==========================================
+           MAIN FILTER FUNCTION
+        ========================================== */
+
+        function applyFilters() {
+
+            const selectedBrands =
+                brands
+                    .filter(item => item.checked)
+                    .map(item => item.value);
+
+
+            const selectedCategories =
+                categories
+                    .filter(item => item.checked)
+                    .map(item => item.value);
+
+
+            const selectedRatings =
+                ratings
+                    .filter(item => item.checked)
+                    .map(item => Number(item.value));
+
+
+            const maxPrice =
+                Number(priceRange.value);
+
+
+            const selectedDiscount =
+                document.querySelector(
+                    'input[name="discount"]:checked'
+                );
+
+
+            const minimumDiscount =
+                selectedDiscount
+                    ? Number(selectedDiscount.value)
+                    : 0;
+
+
+            const searchText =
+                brandSearch.value
+                    .toLowerCase()
+                    .trim();
+
+
+            let visibleProducts = 0;
+
+
+            products.forEach(product => {
+
+                const brand =
+                    product.dataset.brand;
+
+                const category =
+                    product.dataset.category;
+
+                const price =
+                    Number(product.dataset.price);
+
+                const rating =
+                    Number(product.dataset.rating);
+
+                const discount =
+                    Number(product.dataset.discount);
+
+                const stock =
+                    product.dataset.stock;
+
+
+                let show = true;
+
+
+                /* BRAND */
+
+                if (
+                    selectedBrands.length &&
+                    !selectedBrands.includes(brand)
+                ) {
+                    show = false;
+                }
+
+
+                /* CATEGORY */
+
+                if (
+                    selectedCategories.length &&
+                    !selectedCategories.includes(category)
+                ) {
+                    show = false;
+                }
+
+
+                /* PRICE */
+
+                if (price > maxPrice) {
+                    show = false;
+                }
+
+
+                /* RATING */
+
+                if (selectedRatings.length) {
+
+                    const ratingOK =
+                        selectedRatings.some(
+                            value => rating >= value
+                        );
+
+                    if (!ratingOK) {
+                        show = false;
+                    }
+
+                }
+
+
+                /* DISCOUNT */
+
+                if (discount < minimumDiscount) {
+                    show = false;
+                }
+
+
+                /* STOCK */
+
+                if (
+                    !stockFilter.checked &&
+                    stock === "no"
+                ) {
+                    show = false;
+                }
+
+
+                /* BRAND SEARCH */
+
+                if (
+                    searchText &&
+                    !brand.includes(searchText)
+                ) {
+                    show = false;
+                }
+
+
+                product.style.display =
+                    show ? "block" : "none";
+
+
+                if (show) {
+                    visibleProducts++;
+                }
+
+            });
+
+
+            resultCount.innerText =
+                `Showing ${visibleProducts} products`;
+
+
+            noProduct.style.display =
+                visibleProducts === 0
+                    ? "block"
+                    : "none";
+
+        }
+
+
+        /* ==========================================
+           PRICE RANGE
+        ========================================== */
+
+        priceRange.addEventListener(
+            "input",
+            function () {
+
+                let value =
+                    Number(this.value);
+
+                document.getElementById(
+                    "priceValue"
+                ).innerText =
+                    value >= 100000
+                        ? "₹1,00,000+"
+                        : "₹" + value.toLocaleString("en-IN");
+
+                applyFilters();
+
+            }
+        );
+
+
+        /* ==========================================
+           BRAND SEARCH
+        ========================================== */
+
+        brandSearch.addEventListener(
+            "input",
+            function () {
+
+                const search =
+                    this.value.toLowerCase();
+
+                document
+                    .querySelectorAll(".brand-option")
+                    .forEach(option => {
+
+                        const text =
+                            option.innerText.toLowerCase();
+
+                        option.style.display =
+                            text.includes(search)
+                                ? "flex"
+                                : "none";
+
+                    });
+
+                applyFilters();
+
+            }
+        );
+
+
+        /* ==========================================
+           CHECKBOXES
+        ========================================== */
+
+        document
+            .querySelectorAll(
+                ".brand, .category, .rating-filter"
+            )
+            .forEach(input => {
+
+                input.addEventListener(
+                    "change",
+                    applyFilters
+                );
+
+            });
+
+
+        document
+            .querySelectorAll(
+                'input[name="discount"]'
+            )
+            .forEach(input => {
+
+                input.addEventListener(
+                    "change",
+                    applyFilters
+                );
+
+            });
+
+
+        stockFilter.addEventListener(
+            "change",
+            applyFilters
+        );
+
+
+        /* ==========================================
+           SORT
+        ========================================== */
+
+        const sortButtons =
+            document.querySelectorAll(".sort-btn");
+
+        sortButtons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    sortButtons.forEach(btn =>
+                        btn.classList.remove("active")
+                    );
+
+                    this.classList.add("active");
+
+
+                    const type =
+                        this.dataset.sort;
+
+
+                    products.sort(
+                        (a, b) => {
+
+                            if (type === "low") {
+
+                                return Number(a.dataset.price)
+                                    -
+                                    Number(b.dataset.price);
+
+                            }
+
+
+                            if (type === "high") {
+
+                                return Number(b.dataset.price)
+                                    -
+                                    Number(a.dataset.price);
+
+                            }
+
+
+                            if (type === "rating") {
+
+                                return Number(b.dataset.rating)
+                                    -
+                                    Number(a.dataset.rating);
+
+                            }
+
+
+                            if (type === "discount") {
+
+                                return Number(b.dataset.discount)
+                                    -
+                                    Number(a.dataset.discount);
+
+                            }
+
+
+                            return Number(b.dataset.popular)
+                                -
+                                Number(a.dataset.popular);
+
+                        }
+                    );
+
+
+                    const container =
+                        document.getElementById("products");
+
+
+                    products.forEach(product => {
+
+                        container.appendChild(product);
+
+                    });
+
+
+                    applyFilters();
+
+                }
+            );
+
+        });
+
+
+        /* ==========================================
+           WISHLIST
+        ========================================== */
+
+        document
+            .querySelectorAll(".heart")
+            .forEach(heart => {
+
+                heart.addEventListener(
+                    "click",
+                    function () {
+
+                        this.classList.toggle("active");
+
+                        this.innerText =
+                            this.classList.contains("active")
+                                ? "♥"
+                                : "♡";
+
+                    }
+                );
+
+            });
+
+
+        /* ==========================================
+           CLEAR ALL
+        ========================================== */
+
+        document
+            .getElementById("clearFilters")
+            .addEventListener(
+                "click",
+                function () {
+
+                    /* checkbox */
+
+                    document
+                        .querySelectorAll(
+                            ".brand, .category, .rating-filter"
+                        )
+                        .forEach(input => {
+                            input.checked = false;
+                        });
+
+
+                    /* discount */
+
+                    document
+                        .querySelectorAll(
+                            'input[name="discount"]'
+                        )
+                        .forEach(input => {
+                            input.checked = false;
+                        });
+
+
+                    /* search */
+
+                    brandSearch.value = "";
+
+
+                    /* price */
+
+                    priceRange.value = 100000;
+
+                    document.getElementById(
+                        "priceValue"
+                    ).innerText = "₹1,00,000+";
+
+
+                    /* stock */
+
+                    stockFilter.checked = false;
+
+
+                    /* show brands */
+
+                    document
+                        .querySelectorAll(".brand-option")
+                        .forEach(option => {
+                            option.style.display = "flex";
+                        });
+
+
+                    applyFilters();
+
+                }
+            );
+
+
+        /* INITIAL */
+
+        applyFilters();
+
+    </script>
+
+</body>
+
+</html>

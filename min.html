@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+
+        </d35>
+
+        <div class="overlay" id="overlay"></div>
+
+        <div class="drawer" id="drawer">
+
+            <div class="drawer-header">
+                <b style="font-size: 17px;">select delivery address</b>
+                <button id="closeDrawer">✕</button>
+            </div>
+            <div class="search w-110 h-10 flex items-center rounded-md border-1 shadow-md">
+                <div class="search-icon text-sm"><i class="fa-solid fa-magnifying-glass"></i></div>
+                <div class="search-text">
+                    <input type="search" placeholder="Search by area, street name, pin code">
+                </div>
+            </div>
+            <div class="location flex items-center">
+                <div class="location-img"><img src="image/fed3558f-dbce-48d7-8ca8-2f1a16834681.webp" style="width: 35px;"
+                        alt=""></div>
+                <div class="location-box">
+                    <div class="location-upper text-blue-400"><b>use my current location</b></div>
+                    <div class="location-lower text-sm">allow accress to location</div>
+                </div>
+            </div>
+            <div class="saved-address"><b>saved address</b></div>
+            <div class="last flex items-center gap-2 text-blue-400"><img src="image/6a80cefe-2640-40e5-a43c-77d66aa83674.webp"
+                    style="width: 25px;" alt="">Login to see saved address</div>
+
+
+        </div>
+
+
+        <div class="contrainer w-300 h-100vh">
+            <div class="flipkart-min flex  items-center">
+                <div class="i text-md"><i class="fa-solid fa-arrow-left"></i></div>
+                <div class="t">Flipkart Mintutes</div>
+            </div>
+            <div class="share-location  flex" id="openDrawer">
+                <div class="left-1"><img src="image/df9443ec7c38d8f0.webp" alt=""></div>
+                <div class="right-1"><img src="image/f2b30322822eb5ac.webp" alt=""></div>
+            </div>
+            <div class="grocery">
+                <img src="image/373612c986ba9f19.webp" alt="">
+            </div>
+            <div class="contrain flex">
+                <div class="fruits flex">
+                    <div class="left-2"><img src="image/272130d841e2f57d.webp" style="width: 400px;" alt=""></div>
+                    <div class="right-2"><img src="image/aaa1249f7701e3c0.webp" style="width: 400px;" alt=""></div>
+                </div>
+                <div class="attaa bg-white"><img src="image/025bb0a526e76a50.webp" style="width: 400px;" alt=""></div>
+                <div class="oil bg-white"><img src="image/651c56503b2afe6d.webp" style="width: 400px;" alt=""></div>
+            </div>
+            <div class="contrain bg-red-200 flex">
+                <div class="dairy bg-red-400"><img src="images/f2c93fec79a5f30f.webp" style="width: 400px;" alt=""></div>
+                <div class="dry-fruits bg-white"><img src="images/d4ceefbe83200ac5.webp" style="width: 400px;" alt=""></div>
+                <div class="chicken bg-blue-100"><img src="images/7a6752d7207d512f.webp" style="width: 400px;" alt=""></div>
+                <div class="frozen-foods bg-red-100"><img src="images/a41295e75c6ea1e8.webp" style="width: 400px;" alt="">
+                </div>
+            </div>
+            <div class="shacks  bg-red-100"><img src="images/9a439674471326d4.webp" alt=""></div>
+            <div class="contrain bg-red-200 flex">
+                <div class="chips flex">
+                    <div class="left-3"><img src="images/5ac06231c9faf1b5.webp" style="width: 300px;" alt=""></div>
+                    <div class="right-3"><img src="images/8fece2e298f63d47.webp" style="width: 300px;" alt=""></div>
+                </div>
+                <div class="ice-creams"><img src="images/0f0f0a33e3d3ae57.webp" style="width: 300px;" alt=""></div>
+                <div class="drinks"><img src="images/4c1beaaa461ead78.webp" style="width: 300px;" alt=""></div>
+            </div>
+            <div class="contrain bg-red-200 flex">
+                <div class="dairy bg-red-400"><img src="images/00f1e7d44aab6948.webp" alt="">
+                </div>
+                <div class="dry-fruits bg-white"><img src="images/2bed9bf0af6358c7.webp" alt=""></div>
+                <div class="chicken bg-blue-100"><img src="images/629fda0ed800b92c.webp" alt=""></div>
+                <div class="frozen-foods bg-red-100"><img src="images/5d8d1f23672e4114.webp" alt=""></div>
+            </div>
+            <div class="shacks bg-red-100"><img src="images/860ed3b7e2e3bcb6.webp" alt=""></div>
+        </div>
+
+
+
+        <script>
+            const drawer = document.getElementById("drawer");
+            const overlay = document.getElementById("overlay");
+
+            document
+                .getElementById("openDrawer")
+                .onclick = () => {
+
+                    drawer.classList.add("active");
+                    overlay.classList.add("active");
+
+                };
+
+            document
+                .getElementById("closeDrawer")
+                .onclick = closeDrawer;
+
+            overlay.onclick = closeDrawer;
+
+            function closeDrawer() {
+
+                drawer.classList.remove("active");
+                overlay.classList.remove("active");
+
+            }
+        </script>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</body>
+
+</html>
